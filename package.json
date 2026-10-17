@@ -1,0 +1,43 @@
+{
+  "name": "dsh-tool-governor",
+  "version": "1.0.0",
+  "description": "A DeepSeek Harness plugin that intercepts repeated tool calls, caps per-turn budgets, and breaks failure loops to reduce token waste.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "tool-governance",
+    "guardrails",
+    "token-budget"
+  ],
+  "license": "MIT",
+  "author": "George-Java",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/George-Java/dsh-tool-governor.git"
+  },
+  "homepage": "https://github.com/George-Java/dsh-tool-governor#readme",
+  "bugs": {
+    "url": "https://github.com/George-Java/dsh-tool-governor/issues"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
