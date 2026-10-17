@@ -31,11 +31,14 @@ dsh plugin --profile web add "github:George-Java/dsh-tool-governor#main"
 
 | Item | Value |
 | --- | --- |
-| DSH | `0.1.x` (tested on `0.1.0-rc.5` and later) |
+| DSH | `0.2.x` (tested on `0.2.1-rc.2`) |
 | Platform | Windows / macOS / Linux |
-| Node.js | `^22.19.0 || >=24.0.0` |
+| Node.js | `^22.19.0 \|\| >=24.0.0` |
 
-> **0.2.x note:** DSH 0.2 replaced the per-agent `agent` service with the `agents` registry plus scoped agent events. This plugin's `inject: ['agent']` therefore waits for a service that no longer exists and stays inactive on `0.2.x`. Porting to `exec.agent` / `event.agent` is in progress.
+The plugin hooks `tools/pre-execute`, `tools/post-execute`, `ctx.tools.guard`, and `agent/pre-step`
+at the profile root, so it needs only the global `tools` service. It reads the acting agent from
+`exec.agent` / `event.agent`, and takes the current turn from the `agent/pre-step` payload
+(`event.turn`), falling back to `agent.currentTurn` on 0.1.x. A new turn starts a fresh budget.
 
 ## Configuration
 
@@ -50,7 +53,7 @@ All fields are optional — defaults are applied when omitted.
 | `denyTools` | `[]` | Glob patterns of tools to always deny (e.g. `["browser_*"]`) |
 | `denyMessage` | built-in | Message injected when a call is denied |
 
-Override through your profile's `cordis.patch.yml`:
+Override through the profile `cordis.patch.yml`:
 
 ```yaml
 - id: dsh-tool-governor
@@ -68,14 +71,12 @@ dsh plugin --profile web remove dsh-tool-governor
 
 ## How it works
 
-The plugin registers four hooks on `ctx`:
-
 1. `tools/pre-execute` — denies blacklisted tools, exhausted per-turn budgets, repeated signatures, and failure loops.
 2. `tools/post-execute` — counts completed calls and tracks consecutive failures.
 3. `ctx.tools.guard` — a monotonic, synchronous guard that makes earlier denials final.
-4. `agent/pre-step` — blocks the turn once its model-step budget is spent.
+4. `agent/pre-step` — records the current turn for every agent and rejects the turn once its model-step budget is spent.
 
-Per-agent, per-turn ledgers are keyed by agent id and turn number; a new turn starts a fresh budget.
+Per-agent, per-turn ledgers are keyed by agent id and turn number.
 
 ## License
 
