@@ -24,7 +24,7 @@ dsh --profile web --dump-config | findstr dsh-tool-governor
 Pin a version, or install directly from source:
 
 ```bash
-dsh plugin --profile web add dsh-tool-governor@1.0.0
+dsh plugin --profile web add dsh-tool-governor@1.0.1
 dsh plugin --profile web add github:George-Java/dsh-tool-governor
 ```
 

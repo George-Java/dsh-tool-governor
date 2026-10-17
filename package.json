@@ -1,6 +1,6 @@
 {
   "name": "dsh-tool-governor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A DeepSeek Harness plugin that intercepts repeated tool calls, caps per-turn budgets, and breaks failure loops to reduce token waste.",
   "type": "module",
   "main": "lib/index.js",
