@@ -12,7 +12,7 @@ A DeepSeek Harness plugin that stops runaway tool calls before they burn through
 ## Install
 
 ```bash
-dsh plugin --profile web add github:George-Java/dsh-tool-governor
+dsh plugin --profile web add dsh-tool-governor
 ```
 
 Restart DSH after installing. Verify the bundle is registered:
@@ -21,10 +21,11 @@ Restart DSH after installing. Verify the bundle is registered:
 dsh --profile web --dump-config | findstr dsh-tool-governor
 ```
 
-Pin a ref explicitly if needed:
+Pin a version, or install directly from source:
 
 ```bash
-dsh plugin --profile web add "github:George-Java/dsh-tool-governor#main"
+dsh plugin --profile web add dsh-tool-governor@1.0.0
+dsh plugin --profile web add github:George-Java/dsh-tool-governor
 ```
 
 ## Compatibility
